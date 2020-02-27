@@ -66,6 +66,21 @@ def get_recruit_urls(searchword):
     return recruit_urls
 
 
+def get_recruit_totalPage(searchword):
+    """
+    사람인에서 searchword 검색 결과, 구인 공고 페이지수를 구함
+    """
+    resp = getDownload('http://www.saramin.co.kr/zf_user/search/recruit',
+                       params={'searchword':searchword})
+    dom = BeautifulSoup(resp.text, 'lxml')
+
+    totalPosts = dom.select_one("#recruit_info > div.header > span").text
+    totalPosts = int(re.sub("[^\d]", "", totalPosts))
+
+    totalPages = ceil(totalPosts / 100)
+
+    return totalPages
+    
 # scrapper
 
 def exception(fn):
