@@ -4,7 +4,6 @@ from selenium import webdriver
 from pandas import read_csv
 
 class ThreadFunction(QThread):
-    progress_crawl = pyqtSignal(int)
     progress_scrap = pyqtSignal(int)
     progress_message = pyqtSignal(str)
 
@@ -19,25 +18,21 @@ class ThreadFunction(QThread):
         if self.searchword == None:
             raise AttributeError("searchword is not set.")
 
-        # 초기화
-        driver = webdriver.Chrome()
-        fp, result_path = writer_init(self.searchword)
-        queue = list()
-        self.progress_message.emit("공고 수집을 시작합니다. 원격 웹브라우저를 종료하지 마세요.")
-
         # 크로울링   
+        queue = list()
         totalPages = get_recruit_totalPage(self.searchword)
-        self.progress_message.emit(f"공고 URL을 수집 중입니다.")
-
+        self.progress_message.emit("공고 URL을 수집 중입니다.")
+        
         for i, recruitPage in enumerate(range(1, totalPages+1)):
             queue.extend(get_recruit_urls_from_page(searchword=self.searchword, recruitPage=recruitPage))
             
-            progress = int(i / totalPages * 100)
-            self.progress_crawl.emit(progress)
+        # 초기화
+        driver = webdriver.Chrome()
+        fp, result_path = writer_init(self.searchword)
 
         # 스크래핑
         totalURLs = len(queue)
-        self.progress_message.emit(f"총 {totalURLs}개의 공고에 대하여 스크랩 중입니다.")
+        self.progress_message.emit(f"총 {totalURLs}개의 공고에 대하여 스크랩 중입니다.\n원격 웹브라우저를 종료하지 마세요.")
 
         for j, url in enumerate(queue):
             contents = saramin_scrapper(url, driver)

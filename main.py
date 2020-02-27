@@ -11,10 +11,8 @@ class MyApp(QWidget):
         self.label1 = QLabel("검색", self)
         self.search_input = QLineEdit(self)
         self.search_button = QPushButton("검색", self)
-        self.label_pb1 = QLabel("크로울링 상태", self)
-        self.progressbar1 = QProgressBar(self)
-        self.label_pb2 = QLabel("스크랩 상태", self)
-        self.progressbar2 = QProgressBar(self)
+        self.label_pb = QLabel("스크랩 상태", self)
+        self.progressbar = QProgressBar(self)
         self.output = QTextEdit(self)
 
         # 쓰레드
@@ -28,10 +26,8 @@ class MyApp(QWidget):
         vbox.addWidget(self.label1)
         vbox.addWidget(self.search_input)
         vbox.addWidget(self.search_button)
-        vbox.addWidget(self.label_pb1)
-        vbox.addWidget(self.progressbar1)
-        vbox.addWidget(self.label_pb2)
-        vbox.addWidget(self.progressbar2)
+        vbox.addWidget(self.label_pb)
+        vbox.addWidget(self.progressbar)
         vbox.addWidget(self.output)
         self.setLayout(vbox)
 
@@ -39,8 +35,7 @@ class MyApp(QWidget):
         self.search_button.clicked.connect(self.function)
         self.search_input.editingFinished.connect(self.function)
         # 쓰레드 연동 출력
-        self.tf.progress_crawl.connect(self.progressbar1.setValue)
-        self.tf.progress_scrap.connect(self.progressbar2.setValue)
+        self.tf.progress_crawl.connect(self.progressbar.setValue)
         self.tf.progress_message.connect(self.output.setText)
 
         # 창 띄우기
