@@ -23,10 +23,12 @@ class ThreadFunction(QThread):
         driver = webdriver.Chrome()
         fp, result_path = writer_init(self.searchword)
         queue = list()
+        self.progress_message.emit("공고 수집을 시작합니다. 원격 웹브라우저를 종료하지 마세요.")
 
         # 크로울링   
         totalPages = get_recruit_totalPage(self.searchword)
-        
+        self.progress_message.emit(f"공고 URL을 수집 중입니다.")
+
         for i, recruitPage in enumerate(range(1, totalPages+1)):
             queue.extend(get_recruit_urls_from_page(searchword=self.searchword, recruitPage=recruitPage))
             
@@ -35,6 +37,7 @@ class ThreadFunction(QThread):
 
         # 스크래핑
         totalURLs = len(queue)
+        self.progress_message.emit(f"총 {totalURLs}개의 공고에 대하여 스크랩 중입니다.")
 
         for j, url in enumerate(queue):
             contents = saramin_scrapper(url, driver)
@@ -45,7 +48,9 @@ class ThreadFunction(QThread):
 
         # 엑셀 파일 생성
         df = read_csv(result_path, sep='|',  encoding='ansi')
-        df.to_excel(result_path.split(".")[0] + ".xlsx")
+        xlsx_result_path = result_path.split(".")[0] + ".xlsx"
+        df.to_excel(xlsx_result_path)
+        self.progress_message.emit(f"공고 수집이 완료되었습니다.\n{xlsx_result_path} 파일을 확인하십시오.")
 
         # 종료
         driver.close()

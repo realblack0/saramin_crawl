@@ -41,6 +41,7 @@ class MyApp(QWidget):
         # 쓰레드 연동 출력
         self.tf.progress_crawl.connect(self.progressbar1.setValue)
         self.tf.progress_scrap.connect(self.progressbar2.setValue)
+        self.tf.progress_message.connect(self.output.setText)
 
         # 창 띄우기
         self.setWindowTitle("사람인 공고 수집기")
