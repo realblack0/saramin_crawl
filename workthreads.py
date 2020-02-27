@@ -35,19 +35,21 @@ class ThreadFunction(QThread):
         self.progress_message.emit(f"총 {totalURLs}개의 공고에 대하여 스크랩 중입니다.\n원격 웹브라우저를 종료하지 마세요.")
 
         for j, url in enumerate(queue):
-            contents = saramin_scrapper(url, driver)
+            contents = saramin_scrapper(url, driver, delay=0.2)
             writer(fp, contents)
 
             progress = int(j / totalURLs * 100)
             self.progress_scrap.emit(progress)
 
+        # 종료
+        driver.close()
+        fp.close()
+        self.progress_scrap.emit(100)
+        
         # 엑셀 파일 생성
         df = read_csv(result_path, sep='|',  encoding='ansi')
         xlsx_result_path = result_path.split(".")[0] + ".xlsx"
         df.to_excel(xlsx_result_path)
         self.progress_message.emit(f"공고 수집이 완료되었습니다.\n{xlsx_result_path} 파일을 확인하십시오.")
 
-        # 종료
-        driver.close()
-        fp.close()
 
