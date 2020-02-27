@@ -28,11 +28,10 @@ class ThreadFunction(QThread):
         totalPages = get_recruit_totalPage(self.searchword)
         
         for i, recruitPage in enumerate(range(1, totalPages+1)):
-            queue.extend(get_recruit_urls_from_page(searchword=searchword, recruitPage=recruitPage))
+            queue.extend(get_recruit_urls_from_page(searchword=self.searchword, recruitPage=recruitPage))
             
-            progress = i / totalPages * 100
-            if isinstance(progress, int):
-                self.progress_crawl.emit(progress)
+            progress = int(i / totalPages * 100)
+            self.progress_crawl.emit(progress)
 
         # 스크래핑
         totalURLs = len(queue)
@@ -41,9 +40,8 @@ class ThreadFunction(QThread):
             contents = saramin_scrapper(url, driver)
             writer(fp, contents)
 
-            progress = j / totalURLs * 100
-            if isinstance(progress, int):
-                self.progress_scrap.emit(progress)
+            progress = int(j / totalURLs * 100)
+            self.progress_scrap.emit(progress)
 
         # 엑셀 파일 생성
         df = read_csv(result_path, sep='|',  encoding='ansi')
