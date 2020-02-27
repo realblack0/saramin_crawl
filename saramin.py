@@ -133,7 +133,7 @@ def get_applicant_count(dom):
     applicant_count = dom.select_one('.jv_cont.jv_statics .total > dd > span').text
     return applicant_count
 
-def saramin_scrapper(url, driver):
+def saramin_scrapper(url, driver, delay=0.3):
     """
     구인 공고에서 필요한 내용을 스크랩한다.
     
@@ -143,7 +143,7 @@ def saramin_scrapper(url, driver):
         스크랩주소, 스크랩시간)
     """
     driver.get(url)
-    time.sleep(0.5)
+    time.sleep(delay)
     dom = BeautifulSoup(driver.page_source, 'lxml')
     
     # 기업 정보
