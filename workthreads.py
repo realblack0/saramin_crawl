@@ -2,6 +2,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from saramin import writer_init, writer, get_recruit_totalPage, get_recruit_urls_from_page, saramin_scrapper
 from selenium import webdriver
 from pandas import read_csv
+import os
 
 class ThreadFunction(QThread):
     progress_scrap = pyqtSignal(int)
@@ -27,7 +28,7 @@ class ThreadFunction(QThread):
             queue.extend(get_recruit_urls_from_page(searchword=self.searchword, recruitPage=recruitPage))
             
         # 초기화
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(os.path.abspath("./chromedriver"))
         fp, result_path = writer_init(self.searchword)
 
         # 스크래핑

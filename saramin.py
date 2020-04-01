@@ -1,3 +1,7 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -183,7 +187,7 @@ def writer_init(searchword):
                 result_path = f'saramin_search_{searchword} ({n}).csv'
                 break
 
-    fp = open(result_path, 'w', encoding='ANSI')
+    fp = open(result_path, 'w', encoding='utf-8')
     fp.write('기업명| 근무자수| 기업주소| 공고근무지| 모집인원| 지원자수| 스크랩주소| 스크랩시간')
     fp.write('\n')
         
