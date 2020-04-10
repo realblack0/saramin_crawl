@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
 
@@ -174,19 +174,20 @@ def writer_init(searchword):
     결과 csv 파일을 세팅한다.
     이미 파일이 존재하면 새롭게 csv 파일을 생성한다.
     """
-    result_path = f'saramin_search_{searchword}.csv'
+    result_path = 'saramin_search_{searchword}.cache.csv'.format(searchword=searchword)
     if os.path.exists(result_path):
 
         for n in range(1, 10):
             if n == 10:
-                raise Exception("결과 파일을 삭제하고 다시 시도하세요") 
+                raise Exception("캐시 파일을 삭제하고 다시 시도하세요") 
 
-            if os.path.exists(f'saramin_search_{searchword} ({n}).csv'):
+            if os.path.exists('saramin_search_{searchword} ({n}).cache.csv'.format(searchword=searchword, n=n)):
                 continue
             else: 
-                result_path = f'saramin_search_{searchword} ({n}).csv'
+                result_path = 'saramin_search_{searchword} ({n}).cache.csv'.format(searchword=searchword, n=n)
                 break
 
+    result_path = 'cache/' + result_path
     fp = open(result_path, 'w', encoding='utf-8')
     fp.write('기업명| 근무자수| 기업주소| 공고근무지| 모집인원| 지원자수| 스크랩주소| 스크랩시간')
     fp.write('\n')

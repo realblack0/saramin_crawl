@@ -18,14 +18,14 @@ def getDownload(url, params=None, wait=1, retry=3, **kwargs):
         resp = requests.get(url, params=params, **kwargs)
         resp.raise_for_status
     except:
-        print(f'{resp.status_code} Error is occured.')
+        print('{} Error is occured.'.format(resp.status_code))
         if 500 <= resp.status_code < 600 and retry > 0:
-            print(f"Retry to get page. (remained retry: {retry-1})")
+            print("Retry to get page. (remained retry: {})".format(retry-1))
             time.sleep(wait)
             resp = getDownload(url, wait, retry-1, params=params, **kwargs)
     
     if not resp.ok:
-        print(f"Failed to get page: {url}")
+        print("Failed to get page: {url}".format(url=url))
     
     return resp
 
@@ -38,14 +38,14 @@ def postDownload(url, data=None, wait=1, retry=3, **kwargs):
         resp = requests.post(url, data=data, **kwargs)
         resp.raise_for_status
     except:
-        print(f'{resp.status_code} Error is occured.')
+        print('{} Error is occured.'.format(resp.status_code))
         if 500 <= resp.status_code < 600 and retry > 0:
-            print(f"Retry to get page. (remained retry: {retry-1})")
+            print("Retry to get page. (remained retry: {})".format(retry-1))
             time.sleep(wait)
             resp = getDownload(url, wait, retry-1,  data=data, **kwargs)
     
     if not resp.ok:
-        print(f"Failed to get page: {url}")
+        print("Failed to get page: {url}".format(url=url))
     
     return resp
 
