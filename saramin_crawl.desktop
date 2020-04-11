@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=True
+Exec=/home/deepcell/saramin_crawl/saramin_crawl.sh
+Icon=/home/deepcell/saramin_crawl/saramin_crawl.png
+Name=saramin_crawl
+Comment=saramin_crawl excutable icon
+Name[ko]=사람인 크로울러

@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QProgressBar
 from workthreads import ThreadFunction

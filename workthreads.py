@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from PyQt5.QtCore import QThread, pyqtSignal
 from saramin import writer_init, writer, get_recruit_totalPage, get_recruit_urls_from_page, saramin_scrapper
 from selenium import webdriver
